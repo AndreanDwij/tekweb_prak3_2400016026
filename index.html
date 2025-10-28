@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <title>to-do app</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #add;
+            box-sizing: border-box;
+        }
+
+        #takslist {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #takslist li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .close {
+            color: red;
+            float: right;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="container">
+        <h2>To-Do List</h2>
+        <input type="text" id="taskInput" placeholder="Add a new task...">
+        <button onclick="addTask()">Add</button>
+
+        <ul id="takslist">
+        </ul>
+    </div>
+
+    <script>
+        function addTask() {
+            var taskInput = document.getElementById("taskInput");
+            var taskValue = taskInput.value.trim();
+
+            if (taskValue === "") {
+                alert("Please enter a task.");
+                return;
+            }
+            var li = document.createElement("li");
+            li.textContent = taskValue;
+
+            var closeBtn = document.createElement("span");
+            closeBtn.textContent = " ×";
+            closeBtn.className = "close";
+            closeBtn.onclick = function() {
+                deleteTask(this);
+            };  
+            li.appendChild(closeBtn);
+
+            li.onclick = function() {
+                edittask(this);
+            };
+            document.getElementById("takslist").appendChild(li);
+            taskInput.value = "";
+        }
+
+        function deleteTask(element) {
+            var li = element.parentElement;
+            li.remove();
+        }
+
+        function edittask(element) {
+            var taskText = element.childNodes[0].textContent.trim();
+            var newTask = prompt("Edit task:", taskText);
+            if (newTask !== null && newTask.trim() !== "") {
+                element.childNodes[0].textContent = newTask;
+        }
+    }
+    </script>
+</body>
+</html>
